@@ -1,0 +1,101 @@
+
+
+Vue Js does not at runtime use HTML code and has these commands at run time. 
+
+Vue JS creates template based on HTML code and uses html code to be rendered in DOM.
+
+Data stored in vue data object can be output just as is, without using "this".
+
+Can execute function in curly braces - needs to something that can be converted to a string
+
+WE have access to everything stored in data and methods properties.
+
+By calling "this" in methods, can access data properties through methods.
+
+Cant use curly braces in any http element attributes - can only use curly braces in text elements
+
+v-bind tells JS to not use normal attributes, instead to bind attributes. Binds data dynamically
+
+A directive is an instruction you place in your code, like v-bind.  for cases you cant use double brace, use directives.
+
+v-once allows the value of a property to stick to the initial value and not change if property value changes at a later stage.
+
+By default VUEJS doesnt render HTML content, unless using v-html.
+
+Can parse even objects automatically eg, V-on click update Coordinates.
+
+Use $event to pass automatically created object
+
+ v-on:mousemove.stop : stops propagation of event of parent element
+v-on:mousemove.prevents : prevents default behaviour
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<title>VueJS</title>
+	<link rel="stylesheet" href="">
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+	<h1 v-once>{{title}}</h1>
+		
+        <p>{{ sayHello() }} - <a v-bind:href="link">Google </a> </p>
+        <hr>
+        <p v-html="finishedLink"></p>
+        <p></p>
+        <button v-on:click="increase(2, $event)">Click Me</button> 
+        <p>{{counter}}</p>
+        <p v-on:mousemove="updateCoordinates">Coordinates: {{x}} / {{y}}
+        - <span v-on:mousemove.stop ="">Dead Spot</span>
+        
+        </p>
+        <input type ="text" v-on:keyup.enter.space="alertMe">
+	</div>
+	<script>
+	// You may of course also outsource this script code into a separate file (e.g. app.js) and simply import this file here
+		new Vue({
+			el: '#app',
+			data: {
+				title: 'Hello World!',
+                link: 'http://google.com',
+                finishedLink: '<a href = "http://google.com">Google</a>',
+                counter: 0,
+                x: 0,
+                y: 0
+			},
+            methods: {
+                sayHello: function(){
+                    this.title = 'Hello';
+                    return this.title;
+                    
+                },
+                increase: function(step, event){
+                    this.counter += step;
+                    
+                },
+                updateCoordinates: function(event){
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                    
+                    
+                },
+                alertMe: function(){
+                    alert('Alert');
+                    
+                    
+                }
+                
+                
+                
+            }
+           
+			
+		});
+	</script>
+</body>
+</html>
