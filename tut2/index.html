@@ -28,6 +28,30 @@ Use $event to pass automatically created object
 
  v-on:mousemove.stop : stops propagation of event of parent element
 v-on:mousemove.prevents : prevents default behaviour
+ v-on:keyup.enter - listen to specific key events
+ 
+ Within the DivID="app", we can write javascript directly in the {{}}, aslong as its not if or for statements.
+ 
+ v-model allows for 2way data binding : bellow example updates the data property and whereever the data property is specified
+ 
+ Data property is not reactive - need to use methods or computed.
+ Known options for VUE instance:  El: connects to Dom
+                                  data: Store data to be used
+                                  methods: methods of the Vue instance
+                                  computed: Dependant properties
+                                  
+Computed allows us to store properties
+Call computed objects the same as you would with data properties - with {{}}
+Everything stored in computed can be used as you would in data property.
+Computed properties doesnt get executed all the time, like methods do.
+only use methods if you dont want to cache results - you want to update or recalculate dom all the time.
+computed objects are more optimal
+
+An alternative computed property: watch object (execute code upon data changes)
+ Computed property runs syncronously.  If you need to run assyncronously, need to use watch.
+ 
+ 
+ 
 
 
 
@@ -42,7 +66,10 @@ v-on:mousemove.prevents : prevents default behaviour
 </head>
 <body>
 	<div id="app">
-	<h1 v-once>{{title}}</h1>
+	    <input type="text" v-model="name">
+	    <p> {{name}}</p>
+        <p></p>
+       	<h1 v-once>{{title}}</h1>
 		
         <p>{{ sayHello() }} - <a v-bind:href="link">Google </a> </p>
         <hr>
@@ -50,24 +77,55 @@ v-on:mousemove.prevents : prevents default behaviour
         <p></p>
         <button v-on:click="increase(2, $event)">Click Me</button> 
         <p>{{counter}}</p>
+        <p>
+        <button v-on:click="counter2++">Increase</button> 
+        <button v-on:click="counter2--">Decrease</button> 
+        <p>Counter 2 {{counter2}}</p>
+        <p>Result  {{result}} {{output}}</p>
         <p v-on:mousemove="updateCoordinates">Coordinates: {{x}} / {{y}}
         - <span v-on:mousemove.stop ="">Dead Spot</span>
         
         </p>
-        <input type ="text" v-on:keyup.enter.space="alertMe">
+        <input type ="text" v-on:keyup.enter="alertMe">
 	</div>
 	<script>
 	// You may of course also outsource this script code into a separate file (e.g. app.js) and simply import this file here
 		new Vue({
 			el: '#app',
 			data: {
+                name: 'Craig',
 				title: 'Hello World!',
                 link: 'http://google.com',
                 finishedLink: '<a href = "http://google.com">Google</a>',
                 counter: 0,
+                counter2: 0,
+                result: '',
                 x: 0,
                 y: 0
 			},
+            
+            computed:{
+                output: function(){
+                return this.counter2 > 5 ? 'Greater than 5' : "Less than 5";
+                
+                
+                
+            }
+                
+                
+            },
+            
+            watch: {
+                counter2: function(value){
+                    var vm = this;
+                    setTimeout(function() {
+                       vm.counter = 0; 
+                        
+                    }, 2000);
+                    
+                }
+                
+            },
             methods: {
                 sayHello: function(){
                     this.title = 'Hello';
@@ -78,6 +136,13 @@ v-on:mousemove.prevents : prevents default behaviour
                     this.counter += step;
                     
                 },
+                increase2: function(){
+                    this.counter2++;
+                    this.result = this.counter2 > 5 ? 'Greater 5' : 'Smaller 5'
+                    
+                    
+                },
+                
                 updateCoordinates: function(event){
                     this.x = event.clientX;
                     this.y = event.clientY;
@@ -94,6 +159,7 @@ v-on:mousemove.prevents : prevents default behaviour
                 
             }
            
+            
 			
 		});
 	</script>
