@@ -1,6 +1,5 @@
-Exercises 26 and 27
-Exercise 28 - 3rd div, we can change colour based on class name. Directly outputting class name - storing value , not if nor not but what
-
+Exercise 29 and 30
+Directly interact with style of element
 
 
 <!DOCTYPE html>
@@ -12,7 +11,7 @@ Exercise 28 - 3rd div, we can change colour based on class name. Directly output
 	<link rel="stylesheet" href="">
 	<script src="vue.js"></script>
 	
-	<style>
+<style>
         .demo {
             width: 100px;
             height: 100px;
@@ -40,19 +39,33 @@ Exercise 28 - 3rd div, we can change colour based on class name. Directly output
 </style>
 </head>
 
+	
+	
+
 
 <body>
 	<div id="app">
        
         <div 
-        class = "demo"
-         @click = "attachRed = !attachRed" 
-        :class="divClasses"> </div>
-        <div class = "demo" :class="{red: attachRed}"> </div>
-        <div class = "demo" :class="[color, {red: attachRed} ]"> </div>
+        class = "demo" :style="{backgroundColor:color}"> </div>
+        <div class = "demo" :style="myStyle"> </div>
+        <div class = "demo" :style= "[myStyle, {height: width + 'px'}]"> </div>
         <hr>
         <input type="text" v-model="color">
+          <input type="text" v-model="width">
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<script>
@@ -60,21 +73,21 @@ Exercise 28 - 3rd div, we can change colour based on class name. Directly output
 		new Vue({
 			el:  '#app' ,
         data: {
-            attachRed: false,
-            color: 'green'
-            
+          
+            color: 'blue',
+            width: 100
         },
-        computed:{
-            divClasses: function(){
-                return {
-                    red: this.attachRed,
-                    blue: !this.attachRed
-                };
+            computed:{
+                myStyle: function(){
+                  return {
+                      
+                      backgroundColor: this.color,
+                      width: this.width + 'px'
+                  };
+                    
+                }
                 
             }
-            
-        }
-           
 			
 		});
 	</script>

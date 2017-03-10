@@ -1,8 +1,3 @@
-Exercises 26 and 27
-Exercise 28 - 3rd div, we can change colour based on class name. Directly outputting class name - storing value , not if nor not but what
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,10 +41,10 @@ Exercise 28 - 3rd div, we can change colour based on class name. Directly output
        
         <div 
         class = "demo"
-         @click = "attachRed = !attachRed" 
+        
         :class="divClasses"> </div>
-        <div class = "demo" :class="{red: attachRed}"> </div>
-        <div class = "demo" :class="[color, {red: attachRed} ]"> </div>
+        <div class = "demo" </div>
+        <div class = "demo"> </div>
         <hr>
         <input type="text" v-model="color">
 </div>
@@ -63,18 +58,7 @@ Exercise 28 - 3rd div, we can change colour based on class name. Directly output
             attachRed: false,
             color: 'green'
             
-        },
-        computed:{
-            divClasses: function(){
-                return {
-                    red: this.attachRed,
-                    blue: !this.attachRed
-                };
-                
-            }
-            
         }
-           
 			
 		});
 	</script>
